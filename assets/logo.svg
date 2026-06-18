@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" width="100%" height="100%">
+  <defs>
+    <style>
+      .dark-blue { fill: #000c7b; }
+      .light-blue { fill: #00b0ff; }
+      .font-logo { font-family: 'Outfit', 'Inter', 'Montserrat', -apple-system, sans-serif; font-weight: 800; }
+    </style>
+  </defs>
+
+  <g transform="translate(60, 10)">
+    <!-- Bag Handle Loop on top of B -->
+    <!-- Inner Handle (Light Blue) -->
+    <path d="M102 70 C 102 38, 142 38, 142 70" stroke="#00b0ff" stroke-width="7" fill="none" stroke-linecap="round" />
+    <!-- Outer Handle (Dark Blue) -->
+    <path d="M92 70 C 92 26, 152 26, 152 70" stroke="#000c7b" stroke-width="8" fill="none" stroke-linecap="round" />
+
+    <!-- Letter B Base -->
+    <path class="dark-blue" d="M102 70 H 145 C 165 70, 172 80, 172 93 C 172 103, 163 111, 148 113 C 166 115, 175 125, 175 139 C 175 154, 163 164, 138 164 H 102 V 70 Z M120 86 V 105 H 140 C 146 105, 150 101, 150 96 C 150 90, 146 86, 140 86 H 120 Z M120 121 V 148 H 142 C 148 148, 153 144, 153 135 C 153 126, 148 121, 142 121 H 120 Z" />
+
+    <!-- Light Blue Accent Bars on B -->
+    <rect x="92" y="70" width="28" height="6" class="light-blue" />
+    <rect x="102" y="82" width="18" height="6" class="light-blue" />
+
+    <!-- Letters "OS" (Dark Blue) and "CO" (Light Blue) -->
+    <text x="188" y="164" class="font-logo dark-blue" font-size="115" letter-spacing="-4">OS</text>
+    <text x="338" y="164" class="font-logo light-blue" font-size="115" letter-spacing="-4">CO</text>
+  </g>
+</svg>
