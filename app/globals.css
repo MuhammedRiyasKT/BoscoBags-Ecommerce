@@ -769,6 +769,7 @@ ul {
   cursor: pointer;
   height: 480px;
   z-index: 2;
+  margin-top: -80px;
 }
 
 .sbc-feature-img {
@@ -832,8 +833,6 @@ ul {
   display: flex;
   gap: 24px;
   height: 100%;
-  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  will-change: transform;
 }
 
 /* ── Single Category Card with slide-up + fade-in default state ── */
@@ -844,26 +843,19 @@ ul {
   background: #fff;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 10px rgba(0,0,0,.05);
   display: flex;
   flex-direction: column;
   text-decoration: none;
   color: inherit;
   position: relative;
-  
-  /* Animation Defaults (Fade-out and Slide-down when hidden) */
-  opacity: 0.35;
-  transform: translateY(24px) scale(0.98);
-  transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              box-shadow 0.28s ease;
+
+  transition:
+    transform .3s ease,
+    box-shadow .3s ease;
 }
 
 /* Entering Viewport state (Smooth Fade-in & Slide-up) */
-.sbc-card.sbc-card--visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
 
 .sbc-card:hover {
   transform: translateY(-5px);
@@ -969,6 +961,20 @@ ul {
   transform: scale(1.35);
 }
 
+.sbc-viewport {
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+}
+
+.sbc-viewport:active {
+  cursor: grabbing;
+}
+
+.sbc-card img {
+  pointer-events: none;
+}
+
 /* ==========================================================================
    Responsive Overrides
    ========================================================================== */
@@ -988,7 +994,6 @@ ul {
   }
   .sbc-card {
     flex: 0 0 calc((100% - 24px) / 1.5);
-    width: calc((100% - 24px) / 1.5);
   }
 }
 
@@ -1007,7 +1012,6 @@ ul {
   }
   .sbc-card {
     flex: 0 0 calc((100% - 24px) / 1.5);
-    width: calc((100% - 24px) / 1.5);
   }
 }
 
@@ -1038,12 +1042,10 @@ ul {
   .sbc-track {
     gap: 16px;
   }
+
   .sbc-card {
     flex: 0 0 calc((100% - 16px) / 1.4);
-    width: calc((100% - 16px) / 1.4);
     border-radius: 18px;
-    opacity: 1; /* Keeps opacity full for easier navigation on mobile devices */
-    transform: none;
   }
 }
 
@@ -2244,6 +2246,14 @@ ul {
   transform: scale(0.98);
 }
 
+.blog-slider-wrap {
+  position: relative;
+}
+
+.blog-nav-btn {
+  display: none;
+}
+
 /* Responsive Rules */
 @media (max-width: 1024px) {
   .blog-grid {
@@ -2252,17 +2262,87 @@ ul {
   }
 }
 
-@media (max-width: 768px) {
-  .blog-main-title {
-    font-size: 2.25rem;
+@media (max-width:768px) {
+
+  .blog-main-title{
+    font-size:2.1rem;
   }
-  .blog-grid {
-    grid-template-columns: 100%;
-    gap: 32px;
+
+  .blog-slider-wrap{
+    position:relative;
+    width:100%;
   }
-  .blog-title {
-    font-size: 1.25rem;
+
+  .blog-grid{
+    display:flex;
+    overflow-x:auto;
+    gap:20px;
+    scroll-behavior:smooth;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
   }
+
+  .blog-grid::-webkit-scrollbar{
+    display:none;
+  }
+
+  .blog-card{
+    flex:0 0 100%;
+    min-width:100%;
+    max-width:100%;
+  }
+
+  .blog-img-wrap{
+    width:100%;
+    aspect-ratio:16/10;
+    overflow:hidden;
+    border-radius:20px;
+    margin-bottom:18px;
+  }
+
+  .blog-img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+
+  .blog-title{
+    font-size:1.15rem;
+    line-height:1.5;
+  }
+
+  .blog-desc{
+    font-size:.85rem;
+    line-height:1.6;
+  }
+
+  /* arrows */
+  .blog-nav-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:absolute;
+    top:32%;
+    transform:translateY(-50%);
+    width:40px;
+    height:40px;
+    border:none;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 5px 20px rgba(0,0,0,.15);
+    z-index:100;
+    cursor:pointer;
+  }
+
+  .blog-nav-btn--left{
+    left:-8px;
+  }
+
+  .blog-nav-btn--right{
+    right:-8px;
+  }
+
 }
 
 /* ── Blog Page Styling Wrapper ── */
@@ -4061,21 +4141,20 @@ ul {
 }
 
 /* ==========================================================================
-   15. Features / Benefits Bar
+   Features Bar Custom Styles (Rounded White Card Theme)
    ========================================================================== */
 
 .features-bar {
-  background-color: #1e1e22;
+  background-color: #131316; /* Dark background container */
   width: 100%;
-  padding: 2rem 0;
+  padding: 3rem 0;
   overflow: hidden;
 }
 
-/* ── Entrance Animation Keyframes ── */
-@keyframes featuresBarFadeInUp {
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(15px);
   }
   to {
     opacity: 1;
@@ -4083,123 +4162,146 @@ ul {
   }
 }
 
-/* Slider Wrap Relative Bounds */
 .features-bar-slider-wrap {
   position: relative;
   width: 100%;
 }
 
 .features-bar-container {
-  max-width: 1400px;
+  max-width: 1600px;
+  width: 96%;
   margin: 0 auto;
-  padding: 0 2.5rem;
+  padding: 0 0.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1.5rem;
 }
 
-/* Feature Item with On-Load Slide-Up Animation */
+/* Rounded White Card Styles */
 .features-bar-item {
+  background-color: #f8fafd; /* Soft white/blue card background */
+  border-radius: 28px;
   display: flex;
   align-items: center;
-  gap: 1.2rem;
+  gap: 1.25rem;
   flex: 1;
-  padding: 0.5rem 1rem;
-  
-  /* Triggers smooth animation on page refresh */
-  animation: featuresBarFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  padding: 1.75rem 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  animation: fadeInUp 0.6s ease-out both;
 }
 
-/* Staggered entrance delays ignoring dividers */
-.features-bar-container .features-bar-item:nth-of-type(1) { animation-delay: 0.1s; }
-.features-bar-container .features-bar-item:nth-of-type(2) { animation-delay: 0.2s; }
-.features-bar-container .features-bar-item:nth-of-type(3) { animation-delay: 0.3s; }
-.features-bar-container .features-bar-item:nth-of-type(4) { animation-delay: 0.4s; }
+/* Stagger animations */
+.features-bar-container .features-bar-item:nth-of-type(1) { animation-delay: 0.05s; }
+.features-bar-container .features-bar-item:nth-of-type(2) { animation-delay: 0.12s; }
+.features-bar-container .features-bar-item:nth-of-type(3) { animation-delay: 0.19s; }
+.features-bar-container .features-bar-item:nth-of-type(4) { animation-delay: 0.26s; }
 
+/* Increased opacity to 0.45 for excellent visual visibility */
 .features-bar-icon {
-  color: #ffffff;
+  color: rgba(4, 13, 128, 0.45); /* Clear slate-blue tint */
   flex-shrink: 0;
-  opacity: 0.9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.features-bar-text {
+  display: flex;
+  flex-direction: column;
 }
 
 .features-bar-text h4 {
-  font-family: var(--font-secondary), sans-serif;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #ffffff;
-  margin: 0 0 0.25rem 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #040d80; /* Deep blue header color */
+  margin: 0 0 0.35rem 0;
   white-space: nowrap;
 }
 
 .features-bar-text p {
-  font-family: var(--font-secondary), sans-serif;
-  font-size: 0.85rem;
-  color: #a0a0a8;
+  font-family: -apple-system, sans-serif;
+  font-size: 0.9rem;
+  color: #7a8293; /* Muted subtext color */
   margin: 0;
   white-space: nowrap;
 }
 
+/* Faint vertical dividers in dark background spacing */
 .features-bar-divider {
   width: 1px;
-  height: 48px;
-  background-color: rgba(255, 255, 255, 0.12);
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.08);
   flex-shrink: 0;
 }
 
-/* Slider buttons - Hidden on Desktop */
+/* Navigation buttons (Hidden on Desktop) */
 .features-bar-nav-btn {
   display: none;
 }
 
-/* Responsive Styles */
-@media (max-width: 1024px) {
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+
+/* Tablet View Breakdown */
+@media (max-width: 1200px) {
   .features-bar-container {
-    gap: 0.5rem;
+    gap: 1rem;
   }
   .features-bar-item {
-    gap: 0.8rem;
-    padding: 0.5rem 0.5rem;
+    padding: 1.25rem 1.25rem;
+    gap: 1rem;
+    border-radius: 20px;
   }
-  .features-bar-text h4 { font-size: 0.95rem; }
-  .features-bar-text p { font-size: 0.78rem; }
+  .features-bar-text h4 {
+    font-size: 1rem;
+  }
+  .features-bar-text p {
+    font-size: 0.8rem;
+  }
 }
 
+/* Mobile Slider View Breakdown (Renders 1 card per slide view) */
 @media (max-width: 768px) {
-  /* Converts flexbox to touch-scroll slider container on Mobile */
+  .features-bar {
+    padding: 2rem 0;
+  }
+
   .features-bar-container {
     display: flex;
     justify-content: flex-start;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch; /* Smooth inertia scrolling for iOS */
+    -webkit-overflow-scrolling: touch;
     gap: 16px;
-    padding: 0.5rem 2rem;
+    width: 100%;
+    padding: 0.25rem 2rem;
     
-    /* Hide scrollbars functionally across browsers */
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   .features-bar-container::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
+    display: none;
   }
 
-  /* Each feature behaves as a slide */
+  /* One Card per Slide on Mobile screens */
   .features-bar-item {
-    flex-shrink: 0;
-    width: 80%; /* Leaves a small preview of the next feature card */
+    flex: 0 0 100%;
+    width: 100%;
     scroll-snap-align: center;
-    padding: 1rem;
-    background-color: rgba(255, 255, 255, 0.03); /* Soft card background for mobile slide visibility */
-    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    border-radius: 24px;
+    justify-content: center;
   }
 
-  /* Divider lines are hidden on mobile view slider */
   .features-bar-divider {
     display: none;
   }
 
-  /* Enable and Position control arrows on mobile view */
+  /* Slider Navigation Arrows */
   .features-bar-nav-btn {
     display: flex;
     position: absolute;
@@ -4208,26 +4310,26 @@ ul {
     width: 38px;
     height: 38px;
     border-radius: 50%;
-    background-color: rgba(30, 30, 34, 0.95); /* Matches dark section background */
-    border: 1px solid #00b7ff; /* Electric Light Blue accent border */
-    color: #00b7ff; /* Electric Light Blue icon */
+    background-color: #131316;
+    border: 1.5px solid #00b7ff;
+    color: #00b7ff;
     align-items: center;
     justify-content: center;
-    z-index: 5;
+    z-index: 10;
     cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
     transition: background-color 0.2s, border-color 0.2s, color 0.2s;
   }
 
   .features-bar-nav-btn:hover {
-    background-color: #040d80; /* Changes to Deep Blue on Hover */
+    background-color: #040d80;
     border-color: #040d80;
     color: #ffffff;
   }
 
   .features-bar-nav-svg {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
   }
 
   .features-bar-nav-btn--left {
@@ -4236,12 +4338,6 @@ ul {
 
   .features-bar-nav-btn--right {
     right: 8px;
-  }
-}
-
-@media (max-width: 480px) {
-  .features-bar-item {
-    width: 84%; /* Adjust width to fit tight mobile viewports nicely */
   }
 }
 
@@ -8593,7 +8689,7 @@ ul {
 }
 
 /* ==========================================================================
-   Wishlist Page Custom Styles
+   wishlist Page Custom Styles
    ========================================================================== */
 
 .wishlist-section {
@@ -8602,7 +8698,7 @@ ul {
 }
 
 .wishlist-container {
-  max-width: 1600px; /* Stretched width layout matching other grids */
+  max-width: 1600px;
   width: 96%;
   margin: 0 auto;
   padding: 0 0.5rem;
@@ -8641,18 +8737,18 @@ ul {
 
 .wishlist-shop-btn {
   display: inline-block;
-  background-color: #f0801a;
+  background-color: #040d80; /* Deep Blue base */
   color: #ffffff;
   padding: 14px 36px;
   border-radius: 12px;
   font-family: -apple-system, sans-serif;
   font-weight: 700;
   text-decoration: none;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s ease;
 }
 
 .wishlist-shop-btn:hover {
-  background-color: #e07010;
+  background-color: #00b7ff; /* Bright Blue Hover */
 }
 
 /* 3-Column Wishlist Grid Layout */
@@ -8682,7 +8778,7 @@ ul {
   position: absolute;
   top: 16px;
   right: 16px;
-  background: rgba(255, 255, 255, 0.85); /* Clean white circle base matching image */
+  background: rgba(255, 255, 255, 0.85);
   border: none;
   border-radius: 50%;
   width: 32px;
@@ -8693,7 +8789,7 @@ ul {
   cursor: pointer;
   color: #111111;
   z-index: 5;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
@@ -8702,7 +8798,12 @@ ul {
   transform: scale(1.05);
 }
 
-/* Responsive badges */
+.remove-icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Badges */
 .wishlist-card-badge {
   position: absolute;
   top: 16px;
@@ -8716,16 +8817,16 @@ ul {
 }
 
 .wishlist-card-badge.dark {
-  background-color: #1c1c1e; /* Sold out badge */
+  background-color: #1c1c1e;
   color: #ffffff;
 }
 
-.wishlist-card-badge.orange {
-  background-color: #f0801a; /* Sale badge */
+.wishlist-card-badge.blue {
+  background-color: #00b7ff; /* Bright Blue Badge */
   color: #ffffff;
 }
 
-/* Image Wrapper (full cover) */
+/* Image Wrapper */
 .wishlist-card-img-wrap {
   width: 100%;
   height: 330px;
@@ -8771,7 +8872,7 @@ ul {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 .wishlist-card-pricing {
@@ -8783,7 +8884,7 @@ ul {
 }
 
 .wishlist-card-price {
-  color: #f0801a;
+  color: #040d80; /* Deep Blue Price tag */
   font-weight: 700;
 }
 
@@ -8798,9 +8899,9 @@ ul {
   font-weight: 400;
 }
 
-/* Orange Squircle Cart Button */
+/* Cart Button */
 .wishlist-card-cart-btn {
-  background: #f0801a;
+  background: #040d80; /* Deep Blue base */
   color: #ffffff;
   border: none;
   border-radius: 14px;
@@ -8815,8 +8916,13 @@ ul {
 }
 
 .wishlist-card-cart-btn:hover {
-  background: #e07010;
+  background: #00b7ff; /* Bright Blue Hover */
   transform: scale(1.05);
+}
+
+.cart-svg {
+  width: 24px;
+  height: 24px;
 }
 
 /* Animations */
@@ -8826,10 +8932,10 @@ ul {
   100% { transform: scale(1); }
 }
 
-/* Responsive Breakdown */
+/* Tablet View Breakdown */
 @media (max-width: 1024px) {
   .wishlist-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.25rem;
   }
   .wishlist-card-img-wrap {
@@ -8837,22 +8943,83 @@ ul {
   }
 }
 
+/* Mobile View Breakdown (Sets exactly 2 columns per row) */
 @media (max-width: 640px) {
-  .wishlist-grid {
-    grid-template-columns: 1fr; /* 1 column on mobile */
-    gap: 1.5rem;
+  .wishlist-section {
+    padding: 2.5rem 0 4rem;
+  }
+  .wishlist-container {
+    width: 100%;
+    padding: 0 0.75rem;
   }
   .wishlist-main-title {
-    font-size: 2rem;
-    margin-bottom: 2.5rem;
+    font-size: 1.85rem;
+    margin-bottom: 2rem;
+  }
+  .wishlist-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row on mobile devices */
+    gap: 0.75rem; /* Compact layout spacing */
+  }
+  .wishlist-card {
+    border-radius: 16px;
   }
   .wishlist-card-img-wrap {
-    height: 280px;
+    height: 160px; /* Reduced vertical scale for a balanced mobile aspect ratio */
+    border-radius: 16px 16px 0 0;
+  }
+  .wishlist-card-info {
+    padding: 0.75rem 0.6rem 0.9rem 0.6rem;
+  }
+  .wishlist-card-name {
+    font-size: 0.85rem;
+    margin-bottom: 0.4rem;
+  }
+  .wishlist-card-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+  .wishlist-card-pricing {
+    font-size: 0.9rem;
+    flex-wrap: wrap; /* Wraps pricing securely inside narrow columns */
+    gap: 0.25rem;
+  }
+  .wishlist-card-slash {
+    display: none; /* Hidden to save horizontal space */
+  }
+  .wishlist-card-original {
+    font-size: 0.8rem;
+  }
+  .wishlist-card-cart-btn {
+    width: 100%; /* Spans full width of the card's column for ease of access */
+    height: 36px;
+    border-radius: 8px;
+  }
+  .cart-svg {
+    width: 18px;
+    height: 18px;
+  }
+  .wishlist-remove-btn {
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+  }
+  .remove-icon {
+    width: 14px;
+    height: 14px;
+  }
+  .wishlist-card-badge {
+    top: 8px;
+    left: 8px;
+    font-size: 0.6rem;
+    padding: 4px 8px;
+    border-radius: 6px;
   }
 }
 
 /* ==========================================================================
-   Cart Page Custom Styles
+   Cart Page Custom Styles with Deep Blue & Sky Blue Theme
    ========================================================================== */
 
 .cart-main-section {
@@ -8861,7 +9028,7 @@ ul {
 }
 
 .cart-main-container {
-  max-width: 1600px; /* Stretched width layout matching other pages */
+  max-width: 1600px;
   width: 96%;
   margin: 0 auto;
   padding: 0 0.5rem;
@@ -8888,13 +9055,13 @@ ul {
 .cart-continue-link {
   font-family: -apple-system, sans-serif;
   font-size: 1.1rem;
-  color: #111111;
+  color: #040d80; /* Deep Blue Link */
   text-decoration: underline;
   transition: color 0.2s ease;
 }
 
 .cart-continue-link:hover {
-  color: #f0801a;
+  color: #00b7ff; /* Sky Blue Hover */
 }
 
 /* Empty State layout */
@@ -8920,18 +9087,18 @@ ul {
 
 .cart-shop-now-btn {
   display: inline-block;
-  background-color: #f0801a;
+  background-color: #040d80; /* Deep Blue Button */
   color: #ffffff;
   padding: 14px 44px;
   border-radius: 12px;
   font-family: -apple-system, sans-serif;
   font-weight: 700;
   text-decoration: none;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s ease;
 }
 
 .cart-shop-now-btn:hover {
-  background-color: #e07010;
+  background-color: #00b7ff; /* Sky Blue Hover */
 }
 
 /* Table Column Labels */
@@ -8949,7 +9116,7 @@ ul {
 
 .col-label-qty {
   text-align: center;
-  padding-right: 4.5rem; /* Aligns visually with counter */
+  padding-right: 4.5rem;
 }
 
 .col-label-total {
@@ -9017,7 +9184,7 @@ ul {
 }
 
 .price-special {
-  color: #f0801a;
+  color: #040d80; /* Deep Blue Price */
   font-weight: 700;
 }
 
@@ -9027,11 +9194,12 @@ ul {
   gap: 0.4rem;
   font-family: -apple-system, sans-serif;
   font-size: 0.9rem;
-  color: #444444;
+  color: #00b7ff; /* Sky Blue Accent */
+  font-weight: 600;
 }
 
 .tag-icon {
-  color: #111111;
+  color: #00b7ff;
 }
 
 /* Quantity Cell with Controls */
@@ -9044,7 +9212,7 @@ ul {
 }
 
 .qty-picker-wrap {
-  border: 1.5px solid #111111;
+  border: 1.5px solid #040d80; /* Deep Blue Border */
   border-radius: 8px;
   display: inline-flex;
   align-items: center;
@@ -9062,19 +9230,19 @@ ul {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #111111;
+  color: #040d80;
   transition: background-color 0.2s;
 }
 
 .qty-btn:hover {
-  background-color: rgba(0, 0, 0, 0.04);
+  background-color: rgba(4, 13, 128, 0.05);
 }
 
 .qty-value {
   font-family: -apple-system, sans-serif;
   font-size: 1.1rem;
   font-weight: 700;
-  color: #111111;
+  color: #040d80;
   min-width: 32px;
   text-align: center;
 }
@@ -9082,7 +9250,7 @@ ul {
 .cart-delete-btn {
   background: transparent;
   border: none;
-  color: #666666;
+  color: #888888;
   cursor: pointer;
   transition: color 0.2s ease, transform 0.1s ease;
   display: flex;
@@ -9113,7 +9281,7 @@ ul {
 .total-special {
   font-size: 1.15rem;
   font-weight: 700;
-  color: #111111;
+  color: #040d80; /* Deep Blue Total */
 }
 
 /* Bottom Row: Instructions + Summary */
@@ -9151,7 +9319,7 @@ ul {
 }
 
 .instructions-textarea:focus {
-  border-color: #111111;
+  border-color: #040d80; /* Deep Blue focus */
 }
 
 /* Right side pricing checkout block */
@@ -9178,9 +9346,9 @@ ul {
 
 .estimated-value {
   font-family: -apple-system, sans-serif;
-  font-size: 1.45rem;
+  font-size: 1.6rem;
   font-weight: 700;
-  color: #111111;
+  color: #040d80; /* Deep Blue Total accent */
 }
 
 .checkout-notice-text {
@@ -9195,11 +9363,16 @@ ul {
 .shipping-underlined {
   color: #666666;
   text-decoration: underline;
+  transition: color 0.2s ease;
 }
 
-/* Place Order Submit button matches picture style exactly */
+.shipping-underlined:hover {
+  color: #040d80;
+}
+
+/* Place Order Submit Button */
 .place-order-submit-btn {
-  background-color: #1c1c24; /* Dark Slate charcoal background */
+  background-color: #040d80; /* Theme Primary Deep Blue */
   color: #ffffff;
   border: none;
   border-radius: 14px;
@@ -9215,53 +9388,183 @@ ul {
 }
 
 .place-order-submit-btn:hover {
-  background-color: #111115;
+  background-color: #00b7ff; /* Theme Bright Accent on hover */
   transform: translateY(-2px);
 }
 
-/* Responsive Styles */
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+
 @media (max-width: 1024px) {
   .cart-table-header {
-    display: none; /* Hide standard titles on mobile */
+    display: none; /* Hide column labels to give room on smaller devices */
   }
+
   .cart-item-row {
-    grid-template-columns: 1fr; /* Stack item row elements vertically */
+    grid-template-columns: 1fr;
     gap: 1.5rem;
     align-items: flex-start;
     padding: 2rem 0;
   }
+
   .cart-qty-cell {
     justify-content: flex-start;
     padding-right: 0;
   }
+
   .cart-total-cell {
     text-align: left;
   }
+
   .cart-footer-block {
-    grid-template-columns: 1fr; /* Stack bottom blocks vertically */
+    grid-template-columns: 1fr;
     gap: 3.5rem;
   }
+
   .cart-checkout-side {
     align-items: flex-start;
     text-align: left;
   }
+
   .place-order-submit-btn {
     max-width: 100%;
   }
 }
 
+/* Mobile View Optimized Layout (No full-screen width image stretching) */
 @media (max-width: 640px) {
+  .cart-main-section {
+    padding: 2.5rem 0 4rem;
+  }
+
+  .cart-main-container {
+    width: 92%;
+  }
+
+  .cart-header-row {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+  }
+
   .cart-main-title {
-    font-size: 2.2rem;
+    font-size: 2rem;
   }
-  .cart-product-cell {
+
+  /* Compact Product Details side-by-side with smaller square thumbnail */
+  .cart-item-row {
+    display: flex;
     flex-direction: column;
-    align-items: flex-start;
     gap: 1.25rem;
+    padding: 1.5rem 0;
   }
+
+  .cart-product-cell {
+    display: flex;
+    flex-direction: row; /* Aligns side-by-side instead of stacking vertically */
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
   .cart-product-img-wrap {
+    width: 90px;  /* Clean compact square design */
+    height: 90px;
+    border-radius: 8px;
+  }
+
+  .cart-product-name {
+    font-size: 0.95rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Truncates long titles clean to keep layout tight */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .cart-product-prices {
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+  }
+
+  .cart-offer-tag {
+    font-size: 0.8rem;
+  }
+
+  /* Interactive elements row placed clearly below description */
+  .cart-qty-cell {
     width: 100%;
-    height: 200px;
+    display: flex;
+    justify-content: space-between; /* Spreads counter and delete button */
+    align-items: center;
+    border-top: 1px dashed #eeeeee;
+    padding-top: 0.75rem;
+    margin-top: 0.25rem;
+  }
+
+  .qty-picker-wrap {
+    height: 38px; /* Slightly more compact layout */
+  }
+
+  .qty-btn {
+    width: 36px;
+  }
+
+  .qty-value {
+    font-size: 1rem;
+  }
+
+  /* Integrates Mobile Subtotal in the action row directly */
+  .cart-total-cell {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 0.5rem;
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .total-original {
+    font-size: 0.9rem;
+  }
+
+  .total-special {
+    font-size: 1.1rem;
+  }
+
+  /* Bottom Details Column */
+  .cart-footer-block {
+    gap: 2.5rem;
+    padding-top: 2.5rem;
+  }
+
+  .instructions-textarea {
+    font-size: 0.95rem;
+    padding: 1rem;
+  }
+
+  .estimated-total-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .estimated-label {
+    font-size: 1.1rem;
+  }
+
+  .estimated-value {
+    font-size: 1.35rem;
+  }
+
+  .checkout-notice-text {
+    max-width: 100%;
+    font-size: 0.85rem;
+  }
+
+  .place-order-submit-btn {
+    padding: 15px 0;
+    font-size: 1.05rem;
+    border-radius: 12px;
   }
 }
 

@@ -56,18 +56,51 @@ export default function CategoriesPage() {
   const [cartCount, setCartCount] = useState(0);
   const [wishlistCount, setWishlistCount] = useState(0);
   const [floatingAlerts, setFloatingAlerts] = useState<{ id: number; text: string }[]>([]);
-
+  const reviewsScrollRef = useRef<HTMLDivElement>(null);
+  const featuresScrollRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // സ്ലൈഡർ ഇടത്തോട്ടും വലത്തോട്ടും സ്ക്രോൾ ചെയ്യുന്നതിനുള്ള ഫങ്ക്ഷൻ
+   // Smooth scroll handler for mobile/tablet slider
   const handleScroll = (direction: "left" | "right") => {
     if (scrollContainerRef.current) {
-      const itemWidth = scrollContainerRef.current.querySelector(".features-bar-item")?.clientWidth || 250;
-      const scrollAmount = direction === "left" ? -(itemWidth + 16) : (itemWidth + 16);
+      const container = scrollContainerRef.current;
+      // Scrolls exactly by the width of one card element
+      const cardWidth = container.querySelector(".features-bar-item")?.clientWidth || 300;
+      const scrollAmount = cardWidth + 16; // Card width + gap
 
-      scrollContainerRef.current.scrollBy({
+      container.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const handleReviewScroll = (direction: "left" | "right") => {
+    if (reviewsScrollRef.current) {
+      const cardWidth =
+        reviewsScrollRef.current.querySelector(".reviews-card")?.clientWidth || 380;
+
+      const scrollAmount =
+        direction === "left" ? -(cardWidth + 36) : cardWidth + 36;
+
+      reviewsScrollRef.current.scrollBy({
         left: scrollAmount,
-        behavior: "smooth"
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const handleFeatureScroll = (direction: "left" | "right") => {
+    if (featuresScrollRef.current) {
+      const cardWidth =
+        featuresScrollRef.current.querySelector(".features-card")?.clientWidth || 320;
+
+      const scrollAmount =
+        direction === "left" ? -(cardWidth + 24) : cardWidth + 24;
+
+      featuresScrollRef.current.scrollBy({
+        left: scrollAmount,
+        behavior: "smooth",
       });
     }
   };
@@ -213,103 +246,119 @@ export default function CategoriesPage() {
         </div>
       </section>
 
+      {/* Features Bar Section */}
+       <section className="features-bar">
+      <div className="features-bar-slider-wrap">
 
+        {/* Left Arrow Button */}
+        <button
+          className="features-bar-nav-btn features-bar-nav-btn--left"
+          aria-label="Previous feature"
+          onClick={() => handleScroll("left")}
+        >
+          <svg className="features-bar-nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
 
+        {/* Scrollable Container */}
+        <div className="features-bar-container" ref={scrollContainerRef}>
 
-      <section className="features-bar">
-        <div className="features-bar-slider-wrap">
-
-          {/* Left Arrow Button (മൊബൈലിൽ മാത്രം കാണിക്കുന്നത്) */}
-          <button
-            className="features-bar-nav-btn features-bar-nav-btn--left"
-            aria-label="Previous feature"
-            onClick={() => handleScroll("left")}
-          >
-            <svg className="features-bar-nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-          </button>
-
-          {/* Scrollable Container */}
-          <div className="features-bar-container" ref={scrollContainerRef}>
-
-            <div className="features-bar-item">
-              <div className="features-bar-icon">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="1" y="3" width="15" height="13" rx="1" />
-                  <path d="M16 8h4l3 5v3h-7V8z" />
-                  <circle cx="5.5" cy="18.5" r="2.5" />
-                  <circle cx="18.5" cy="18.5" r="2.5" />
-                </svg>
-              </div>
-              <div className="features-bar-text">
-                <h4>Free Shipping</h4>
-                <p>Free shipping on all orders</p>
-              </div>
+          {/* Card 1: Free Shipping */}
+          <div className="features-bar-item">
+            <div className="features-bar-icon">
+              <svg width="44" height="44" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="4" y="14" width="28" height="18" rx="2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M32 18H40L44 23V32H32V18Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <circle cx="12" cy="36" r="4" stroke="currentColor" strokeWidth="2"/>
+                <circle cx="36" cy="36" r="4" stroke="currentColor" strokeWidth="2"/>
+                <path d="M16 36H32" stroke="currentColor" strokeWidth="2"/>
+                <path d="M4 36H8" stroke="currentColor" strokeWidth="2"/>
+                <rect x="8" y="19" width="16" height="8" rx="1" fill="currentColor" fillOpacity="0.15"/>
+                <text x="10" y="25" fill="currentColor" fontSize="6" fontWeight="bold" fontFamily="sans-serif">FREE</text>
+              </svg>
             </div>
-
-            <div className="features-bar-divider"></div>
-
-            <div className="features-bar-item">
-              <div className="features-bar-icon">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="5" width="20" height="14" rx="2" />
-                  <path d="M2 10h20" />
-                  <circle cx="12" cy="14" r="2" />
-                  <path d="M12 12v1" strokeWidth="2" />
-                </svg>
-              </div>
-              <div className="features-bar-text">
-                <h4>Safe Payment</h4>
-                <p>Free shipping on all orders</p>
-              </div>
+            <div className="features-bar-text">
+              <h4>Free Shipping</h4>
+              <p>Free shipping on all orders</p>
             </div>
-
-            <div className="features-bar-divider"></div>
-
-            <div className="features-bar-item">
-              <div className="features-bar-icon">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10" />
-                  <polyline points="12 6 12 12 16 14" />
-                </svg>
-              </div>
-              <div className="features-bar-text">
-                <h4>24/7 Online Support</h4>
-                <p>Free shipping on all orders</p>
-              </div>
-            </div>
-
-            <div className="features-bar-divider"></div>
-
-            <div className="features-bar-item">
-              <div className="features-bar-icon">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="1 4 1 10 7 10" />
-                  <path d="M3.51 15a9 9 0 1 0 .49-4.5" />
-                </svg>
-              </div>
-              <div className="features-bar-text">
-                <h4>Free Returns</h4>
-                <p>Free shipping on all orders</p>
-              </div>
-            </div>
-
           </div>
 
-          {/* Right Arrow Button (മൊബൈലിൽ മാത്രം കാണിക്കുന്നത്) */}
-          <button
-            className="features-bar-nav-btn features-bar-nav-btn--right"
-            aria-label="Next feature"
-            onClick={() => handleScroll("right")}
-          >
-            <svg className="features-bar-nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-          </button>
+          <div className="features-bar-divider"></div>
+
+          {/* Card 2: Safe Payment */}
+          <div className="features-bar-item">
+            <div className="features-bar-icon">
+              <svg width="44" height="44" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="4" y="14" width="34" height="22" rx="3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M4 20H38" stroke="currentColor" strokeWidth="2"/>
+                <rect x="8" y="26" width="6" height="5" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                {/* Fixed internal fill to match card background (#f8fafd) */}
+                <path d="M33 24C33 24 37 25.5 41 24V30C41 35 37 38 37 38C37 38 33 35 33 30V24Z" fill="#f8fafd" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
+                <path d="M35.5 31L37 32.5L39 29.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            <div className="features-bar-text">
+              <h4>Safe Payment</h4>
+              <p>Free shipping on all orders</p>
+            </div>
+          </div>
+
+          <div className="features-bar-divider"></div>
+
+          {/* Card 3: 24/7 Support */}
+          <div className="features-bar-item">
+            <div className="features-bar-icon">
+              <svg width="44" height="44" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="24" cy="22" r="16" stroke="currentColor" strokeWidth="2" strokeDasharray="4 2"/>
+                <path d="M24 12V22L30 25" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <circle cx="24" cy="22" r="1.5" fill="currentColor"/>
+                {/* Fixed internal fill to match card background (#f8fafd) */}
+                <rect x="14" y="32" width="20" height="9" rx="2" fill="#f8fafd" stroke="currentColor" strokeWidth="2"/>
+                <text x="16.5" y="38.5" fill="currentColor" fontSize="6.5" fontWeight="bold" fontFamily="sans-serif">24/7</text>
+              </svg>
+            </div>
+            <div className="features-bar-text">
+              <h4>24/7 Online Support</h4>
+              <p>Free shipping on all orders</p>
+            </div>
+          </div>
+
+          <div className="features-bar-divider"></div>
+
+          {/* Card 4: Free Returns */}
+          <div className="features-bar-item">
+            <div className="features-bar-icon">
+              <svg width="44" height="44" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 14H34V38H6V14Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
+                <path d="M15 14V19H25V14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                {/* Fixed internal fill to match card background (#f8fafd) */}
+                <circle cx="34" cy="32" r="8" fill="#f8fafd" stroke="currentColor" strokeWidth="2"/>
+                <path d="M34 28A4 4 0 1 1 30.5 34" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M32 28.5H34.2V30.7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            <div className="features-bar-text">
+              <h4>Free Returns</h4>
+              <p>Free shipping on all orders</p>
+            </div>
+          </div>
 
         </div>
-      </section>
+
+        {/* Right Arrow Button */}
+        <button
+          className="features-bar-nav-btn features-bar-nav-btn--right"
+          aria-label="Next feature"
+          onClick={() => handleScroll("right")}
+        >
+          <svg className="features-bar-nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+
+      </div>
+    </section>
 
 
       {/* Carry Style Section */}
@@ -506,66 +555,66 @@ export default function CategoriesPage() {
         </div>
       </section>
 
-      {/* Our Client Reviews Section */}
-      <section className="reviews-section">
-        <div className="reviews-container">
-
-          {/* Header */}
-          <div className="reviews-header">
-            <h2 className="reviews-main-title">Our Client Reviews</h2>
-          </div>
-
-          {/* Slider & Navigation Wrapper */}
-          <div className="reviews-slider-wrap">
-
-            {/* Left Arrow Button */}
-            <button
-              className="reviews-nav-btn reviews-nav-btn--left"
-              aria-label="Previous review"
-              onClick={() => handleScroll("left")}
-            >
-              <ChevronLeft size={24} strokeWidth={1.5} />
-            </button>
-
-            {/* Grid Layout (Container with scrollRef) */}
-            <div className="reviews-grid" ref={scrollContainerRef}>
-              {REVIEWS_DATA.map((review) => (
-                <div key={review.id} className="reviews-card">
-
-                  {/* SVG Double Quotes */}
-                  <svg className="reviews-quote-icon" viewBox="0 0 36 28">
-                    <path d="M9.6 28C4.3 28 0 23.7 0 18.4C0 10.6 5.2 2.3 11.5 0L13.8 3.7C9.9 5.8 7.2 10.2 7.2 14.2C7.2 14.8 7.4 15.1 7.9 15.1C8.4 15.1 9.1 14.9 9.8 14.9C13.2 14.9 16 17.7 16 21.4C16 25 13.2 28 9.6 28ZM29.6 28C24.3 28 20 23.7 20 18.4C20 10.6 25.2 2.3 31.5 0L33.8 3.7C29.9 5.8 27.2 10.2 27.2 14.2C27.2 14.8 27.4 15.1 27.9 15.1C28.4 15.1 29.1 14.9 29.8 14.9C33.2 14.9 36 17.7 36 21.4C36 25 33.2 28 29.6 28Z" />
-                  </svg>
-
-                  {/* Review Text */}
-                  <p className="reviews-text">{review.text}</p>
-
-                  {/* Author Info */}
-                  <div className="reviews-author">
-                    <img src={review.avatar} alt={review.authorName} className="reviews-avatar" />
-                    <div className="reviews-author-details">
-                      <span className="reviews-author-name">{review.authorName}</span>
-                      <span className="reviews-author-role">{review.authorRole}</span>
-                    </div>
-                  </div>
-
-                </div>
-              ))}
-            </div>
-
-            {/* Right Arrow Button */}
-            <button
-              className="reviews-nav-btn reviews-nav-btn--right"
-              aria-label="Next review"
-              onClick={() => handleScroll("right")}
-            >
-              <ChevronRight size={24} strokeWidth={1.5} />
-            </button>
-
-          </div>
-
-        </div>
-      </section>
+     {/* Our Client Reviews Section */}
+           <section className="reviews-section">
+             <div className="reviews-container">
+     
+               {/* Header */}
+               <div className="reviews-header">
+                 <h2 className="reviews-main-title">Our Client Reviews</h2>
+               </div>
+     
+               {/* Slider & Navigation Wrapper */}
+               <div className="reviews-slider-wrap">
+     
+                 {/* Left Arrow Button */}
+                 <button
+                   className="reviews-nav-btn reviews-nav-btn--left"
+                   aria-label="Previous review"
+                   onClick={() => handleReviewScroll("left")}
+                 >
+                   <ChevronLeft size={24} strokeWidth={1.5} />
+                 </button>
+     
+                 {/* Grid Layout (Container with scrollRef) */}
+                 <div className="reviews-grid" ref={reviewsScrollRef}>
+                   {REVIEWS_DATA.map((review) => (
+                     <div key={review.id} className="reviews-card">
+     
+                       {/* SVG Double Quotes */}
+                       <svg className="reviews-quote-icon" viewBox="0 0 36 28">
+                         <path d="M9.6 28C4.3 28 0 23.7 0 18.4C0 10.6 5.2 2.3 11.5 0L13.8 3.7C9.9 5.8 7.2 10.2 7.2 14.2C7.2 14.8 7.4 15.1 7.9 15.1C8.4 15.1 9.1 14.9 9.8 14.9C13.2 14.9 16 17.7 16 21.4C16 25 13.2 28 9.6 28ZM29.6 28C24.3 28 20 23.7 20 18.4C20 10.6 25.2 2.3 31.5 0L33.8 3.7C29.9 5.8 27.2 10.2 27.2 14.2C27.2 14.8 27.4 15.1 27.9 15.1C28.4 15.1 29.1 14.9 29.8 14.9C33.2 14.9 36 17.7 36 21.4C36 25 33.2 28 29.6 28Z" />
+                       </svg>
+     
+                       {/* Review Text */}
+                       <p className="reviews-text">{review.text}</p>
+     
+                       {/* Author Info */}
+                       <div className="reviews-author">
+                         <img src={review.avatar} alt={review.authorName} className="reviews-avatar" />
+                         <div className="reviews-author-details">
+                           <span className="reviews-author-name">{review.authorName}</span>
+                           <span className="reviews-author-role">{review.authorRole}</span>
+                         </div>
+                       </div>
+     
+                     </div>
+                   ))}
+                 </div>
+     
+                 {/* Right Arrow Button */}
+                 <button
+                   className="reviews-nav-btn reviews-nav-btn--right"
+                   aria-label="Next review"
+                   onClick={() => handleReviewScroll("right")}
+                 >
+                   <ChevronRight size={24} strokeWidth={1.5} />
+                 </button>
+     
+               </div>
+     
+             </div>
+           </section>
 
       {/* Features Section */}
       <section className="features-section">
@@ -578,7 +627,7 @@ export default function CategoriesPage() {
             <button
               className="features-nav-btn features-nav-btn--left"
               aria-label="Previous feature"
-              onClick={() => handleScroll("left")}
+              onClick={() => handleFeatureScroll("left")}
             >
               <svg className="features-nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <polyline points="15 18 9 12 15 6" />
@@ -586,7 +635,7 @@ export default function CategoriesPage() {
             </button>
 
             {/* Features Grid */}
-            <div className="features-grid" ref={scrollContainerRef}>
+            <div className="features-grid" ref={featuresScrollRef}>
               {FEATURES_DATA.map((feature) => (
                 <div key={feature.id} className="features-card">
 
@@ -610,7 +659,7 @@ export default function CategoriesPage() {
             <button
               className="features-nav-btn features-nav-btn--right"
               aria-label="Next feature"
-              onClick={() => handleScroll("right")}
+              onClick={() => handleFeatureScroll("right")}
             >
               <svg className="features-nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <polyline points="9 18 15 12 9 6" />

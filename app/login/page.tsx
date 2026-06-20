@@ -80,7 +80,7 @@ export default function LoginPage() {
             </div>
 
             <div className="login-create-account-wrap">
-              <a href="#" className="login-create-link">Create account</a>
+              <a href="/register" className="login-create-link">Create account</a>
             </div>
 
           </form>

@@ -25,6 +25,7 @@ import {
   Eye,
   RotateCcw
 } from "lucide-react";
+import useEmblaCarousel from "embla-carousel-react";
 
 // Slide Data
 const SLIDES = [
@@ -510,12 +511,13 @@ const FEATURES_DATA: FeatureItem[] = [
 
 export default function HomePage() {
   // States
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const reviewsScrollRef = useRef<HTMLDivElement>(null);
+  const featuresScrollRef = useRef<HTMLDivElement>(null);
+  const blogScrollRef = useRef<HTMLDivElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [sbcActive, setSbcActive] = useState(0);
   const [ttTab, setTtTab] = useState<"bestsellers" | "newarrival" | "trending">("bestsellers");
   const [cartCount, setCartCount] = useState(1);
   const [wishlistCount, setWishlistCount] = useState(0);
@@ -523,25 +525,80 @@ export default function HomePage() {
   const [floatingAlerts, setFloatingAlerts] = useState<{ id: number; text: string }[]>([]);
 
 
+  const handleFeatureScroll = (direction: "left" | "right") => {
+    if (featuresScrollRef.current) {
+      const cardWidth =
+        featuresScrollRef.current.querySelector(".features-card")?.clientWidth || 320;
 
-  // Helper function to scroll the reviews container left or right
-  const handleScroll = (direction: "left" | "right") => {
-    if (scrollContainerRef.current) {
-      const cardWidth = scrollContainerRef.current.querySelector(".reviews-card")?.clientWidth || 380;
-      const scrollAmount = direction === "left" ? -(cardWidth + 36) : (cardWidth + 36);
+      const scrollAmount =
+        direction === "left" ? -(cardWidth + 24) : cardWidth + 24;
 
-      scrollContainerRef.current.scrollBy({
+      featuresScrollRef.current.scrollBy({
         left: scrollAmount,
-        behavior: "smooth"
+        behavior: "smooth",
       });
     }
   };
 
+  const handleReviewScroll = (direction: "left" | "right") => {
+    if (reviewsScrollRef.current) {
+      const cardWidth =
+        reviewsScrollRef.current.querySelector(".reviews-card")?.clientWidth || 380;
+
+      const scrollAmount =
+        direction === "left" ? -(cardWidth + 36) : cardWidth + 36;
+
+      reviewsScrollRef.current.scrollBy({
+        left: scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const handleBlogScroll = (direction: "left" | "right") => {
+    if (blogScrollRef.current) {
+      const cardWidth =
+        blogScrollRef.current.querySelector(".blog-card")?.clientWidth || 350;
+
+      const gap = 32;
+
+      blogScrollRef.current.scrollBy({
+        left: direction === "left"
+          ? -(cardWidth + gap)
+          : (cardWidth + gap),
+        behavior: "smooth",
+      });
+    }
+  };
+
+  
+const [emblaRef, emblaApi] = useEmblaCarousel({
+  loop: true,
+  align: "start"
+});
+
+const [selectedIndex, setSelectedIndex] = useState(0);
+
+useEffect(() => {
+  if (!emblaApi) return;
+
+  const onSelect = () => {
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  };
+
+  emblaApi.on("select", onSelect);
+  onSelect();
+
+  return () => {
+    emblaApi.off("select", onSelect);
+  };
+}, [emblaApi]);
+
+
+
   // Refs
   const searchInputRef = useRef<HTMLInputElement>(null);
   const autoPlayRef = useRef<(() => void) | null>(null);
-  const sbcViewportRef = useRef<HTMLDivElement>(null);
-  const [sbcCardPx, setSbcCardPx] = useState(0);
 
   // Scroll effect for header
   useEffect(() => {
@@ -564,28 +621,28 @@ export default function HomePage() {
   }, [isSearchOpen]);
 
   // Measure SBC card pixel width on mount + resize
-  useEffect(() => {
-    const measure = () => {
-      if (sbcViewportRef.current) {
-        const firstCard = sbcViewportRef.current.querySelector<HTMLElement>(".sbc-card");
-        if (firstCard) {
-          const track = sbcViewportRef.current.querySelector<HTMLElement>(".sbc-track");
-          let gap = 24;
-          if (track) {
-            const style = window.getComputedStyle(track);
-            const gapVal = parseFloat(style.columnGap || style.gap);
-            if (!isNaN(gapVal)) {
-              gap = gapVal;
-            }
-          }
-          setSbcCardPx(firstCard.offsetWidth + gap);
-        }
-      }
-    };
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, []);
+  // useEffect(() => {
+  //   const measure = () => {
+  //     if (sbcViewportRef.current) {
+  //       const firstCard = sbcViewportRef.current.querySelector<HTMLElement>(".sbc-card");
+  //       if (firstCard) {
+  //         const track = sbcViewportRef.current.querySelector<HTMLElement>(".sbc-track");
+  //         let gap = 24;
+  //         if (track) {
+  //           const style = window.getComputedStyle(track);
+  //           const gapVal = parseFloat(style.columnGap || style.gap);
+  //           if (!isNaN(gapVal)) {
+  //             gap = gapVal;
+  //           }
+  //         }
+  //         setSbcCardPx(firstCard.offsetWidth + gap);
+  //       }
+  //     }
+  //   };
+  //   measure();
+  //   window.addEventListener("resize", measure);
+  //   return () => window.removeEventListener("resize", measure);
+  // }, []);
 
   // Handle escape key to close search
   useEffect(() => {
@@ -771,33 +828,26 @@ export default function HomePage() {
           {/* Right: Slider Track + Dots */}
           <div className="sbc-slider-col">
             {/* Viewport (clips cards to screen edge) */}
-            <div className="sbc-viewport" ref={sbcViewportRef}>
-              <div
-                className="sbc-track"
-                style={{ transform: `translateX(-${sbcActive * sbcCardPx}px)` }}
-              >
-                {SBC_CATEGORIES.map((cat, idx) => {
-                  // Calculates if the card is currently visible in the active viewport window
-                  const isVisible = idx >= sbcActive && idx < sbcActive + 3;
+            <div className="sbc-viewport" ref={emblaRef}>
+              <div className="sbc-track">
+                {SBC_CATEGORIES.map((cat, idx) => (
+                  <a
+                    href="#"
+                    key={idx}
+                    className="sbc-card"
+                  >
+                    <div className="sbc-card-img-wrap">
+                      <img src={cat.img} alt={cat.label} className="sbc-card-img" />
+                    </div>
 
-                  return (
-                    <a
-                      href="#"
-                      key={idx}
-                      className={`sbc-card ${isVisible ? "sbc-card--visible" : ""}`}
-                    >
-                      <div className="sbc-card-img-wrap">
-                        <img src={cat.img} alt={cat.label} className="sbc-card-img" />
-                      </div>
-                      <div className="sbc-card-footer">
-                        <span className="sbc-card-label">{cat.label}</span>
-                        <span className="sbc-card-arrow">
-                          <ArrowRight size={18} />
-                        </span>
-                      </div>
-                    </a>
-                  );
-                })}
+                    <div className="sbc-card-footer">
+                      <span className="sbc-card-label">{cat.label}</span>
+                      <span className="sbc-card-arrow">
+                        <ArrowRight size={18} />
+                      </span>
+                    </div>
+                  </a>
+                ))}
               </div>
             </div>
 
@@ -806,8 +856,9 @@ export default function HomePage() {
               {SBC_CATEGORIES.map((_, idx) => (
                 <button
                   key={idx}
-                  className={`sbc-dot${sbcActive === idx ? " sbc-dot--active" : ""}`}
-                  onClick={() => setSbcActive(idx)}
+                  className={`sbc-dot ${selectedIndex === idx ? "sbc-dot--active" : ""
+                    }`}
+                  onClick={() => emblaApi?.scrollTo(idx)}
                   aria-label={`Go to category ${idx + 1}`}
                 />
               ))}
@@ -1040,48 +1091,69 @@ export default function HomePage() {
       <section className="blog-section">
         <div className="blog-container">
 
-          {/* Header */}
           <div className="blog-header">
             <h2 className="blog-main-title">Our Latest Blog</h2>
           </div>
 
-          {/* Blog Grid */}
-          <div className="blog-grid">
-            {BLOG_DATA.map((blog) => (
-              <a href={`/blog/${blog.id}`} key={blog.id} className="blog-card">
-                {/* Image wrap with rounded corners */}
-                <div className="blog-img-wrap">
-                  <img src={blog.image} alt={blog.title} className="blog-img" />
-                </div>
+          <div className="blog-slider-wrap">
 
-                {/* Meta Info: Author details & view count */}
-                <div className="blog-meta">
-                  <div className="blog-author-info">
-                    <img src={blog.authorAvatar} alt={blog.authorName} className="blog-avatar" />
-                    <div className="blog-author-details">
-                      <span className="blog-author-name">{blog.authorName}</span>
-                      <span className="blog-date">{blog.date}</span>
+            {/* Left Arrow */}
+            <button
+              className="blog-nav-btn blog-nav-btn--left"
+              onClick={() => handleBlogScroll("left")}
+            >
+              <ChevronLeft size={22} />
+            </button>
+
+            {/* Blog Cards */}
+            <div className="blog-grid" ref={blogScrollRef}>
+              {BLOG_DATA.map((blog) => (
+                <a href={`/blog/${blog.id}`} key={blog.id} className="blog-card">
+
+                  <div className="blog-img-wrap">
+                    <img src={blog.image} alt={blog.title} className="blog-img" />
+                  </div>
+
+                  <div className="blog-meta">
+                    <div className="blog-author-info">
+                      <img
+                        src={blog.authorAvatar}
+                        alt={blog.authorName}
+                        className="blog-avatar"
+                      />
+                      <div className="blog-author-details">
+                        <span className="blog-author-name">{blog.authorName}</span>
+                        <span className="blog-date">{blog.date}</span>
+                      </div>
+                    </div>
+
+                    <div className="blog-views">
+                      <Eye size={18} />
+                      <span>{blog.views}</span>
                     </div>
                   </div>
-                  <div className="blog-views">
-                    <Eye size={18} />
-                    <span>{blog.views}</span>
-                  </div>
-                </div>
 
-                {/* Content area */}
-                <h3 className="blog-title">{blog.title}</h3>
-                <p className="blog-desc">{blog.excerpt}</p>
+                  <h3 className="blog-title">{blog.title}</h3>
+                  <p className="blog-desc">{blog.excerpt}</p>
 
-                {/* Read more link */}
-                <span className="blog-readmore">
-                  Read more <span className="blog-readmore-arrow">▶</span>
-                </span>
-              </a>
-            ))}
+                  <span className="blog-readmore">
+                    Read more <span className="blog-readmore-arrow">▶</span>
+                  </span>
+
+                </a>
+              ))}
+            </div>
+
+            {/* Right Arrow */}
+            <button
+              className="blog-nav-btn blog-nav-btn--right"
+              onClick={() => handleBlogScroll("right")}
+            >
+              <ChevronRight size={22} />
+            </button>
+
           </div>
 
-          {/* View All Button at bottom */}
           <div className="blog-footer">
             <a href="/blog" className="blog-view-all-btn">
               View All
@@ -1107,13 +1179,13 @@ export default function HomePage() {
             <button
               className="reviews-nav-btn reviews-nav-btn--left"
               aria-label="Previous review"
-              onClick={() => handleScroll("left")}
+              onClick={() => handleReviewScroll("left")}
             >
               <ChevronLeft size={24} strokeWidth={1.5} />
             </button>
 
             {/* Grid Layout (Container with scrollRef) */}
-            <div className="reviews-grid" ref={scrollContainerRef}>
+            <div className="reviews-grid" ref={reviewsScrollRef}>
               {REVIEWS_DATA.map((review) => (
                 <div key={review.id} className="reviews-card">
 
@@ -1142,7 +1214,7 @@ export default function HomePage() {
             <button
               className="reviews-nav-btn reviews-nav-btn--right"
               aria-label="Next review"
-              onClick={() => handleScroll("right")}
+              onClick={() => handleReviewScroll("right")}
             >
               <ChevronRight size={24} strokeWidth={1.5} />
             </button>
@@ -1152,8 +1224,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      
-       {/* Features Section */}
+
+      {/* Features Section */}
       <section className="features-section">
         <div className="features-container">
 
@@ -1164,7 +1236,7 @@ export default function HomePage() {
             <button
               className="features-nav-btn features-nav-btn--left"
               aria-label="Previous feature"
-              onClick={() => handleScroll("left")}
+              onClick={() => handleFeatureScroll("left")}
             >
               <svg className="features-nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <polyline points="15 18 9 12 15 6" />
@@ -1172,7 +1244,7 @@ export default function HomePage() {
             </button>
 
             {/* Features Grid */}
-            <div className="features-grid" ref={scrollContainerRef}>
+            <div className="features-grid" ref={featuresScrollRef}>
               {FEATURES_DATA.map((feature) => (
                 <div key={feature.id} className="features-card">
 
@@ -1196,7 +1268,7 @@ export default function HomePage() {
             <button
               className="features-nav-btn features-nav-btn--right"
               aria-label="Next feature"
-              onClick={() => handleScroll("right")}
+              onClick={() => handleFeatureScroll("right")}
             >
               <svg className="features-nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <polyline points="9 18 15 12 9 6" />

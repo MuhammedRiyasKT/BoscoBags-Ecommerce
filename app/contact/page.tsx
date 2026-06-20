@@ -1,18 +1,22 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Mail, Phone, Clock, MapPin, ShoppingBag } from "lucide-react";
+import {
+  ShoppingBag,
+  Trash2,
+  Tag,
+  Plus,
+  Minus,
+} from "lucide-react";
 
-export default function ContactPage() {
+export default function CartPage() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [quantity, setQuantity] = useState(2);
+  const [cartEmpty, setCartEmpty] = useState(false);
+  const [instructions, setInstructions] = useState("");
 
-  // Form States
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    comment: ""
-  });
+  const originalPricePerUnit = 499.0;
+  const pricePerUnit = 449.1;
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -20,171 +24,150 @@ export default function ContactPage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  const incrementQuantity = () => setQuantity((prev) => prev + 1);
+  const decrementQuantity = () => {
+    if (quantity > 1) {
+      setQuantity((prev) => prev - 1);
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission logic here
-    console.log("Form submitted:", formData);
+  const handleRemoveItem = () => {
+    setCartEmpty(true);
   };
+
+  const totalOriginal = originalPricePerUnit * quantity;
+  const totalDiscounted = pricePerUnit * quantity;
 
   return (
-    <div className="contact-page-wrapper">
-
-      {/* Cinematic Hero Banner */}
-      <section className="trending-hero">
-        <img
-          src="https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?auto=format&fit=crop&w=1600&q=80"
-          alt="Contact Us"
-          className="trending-hero-img"
-        />
-        <div className="trending-hero-overlay"></div>
-        <div className="trending-hero-content">
-          <h1 className="trending-hero-title">Contact Us</h1>
-          <p className="trending-hero-subtitle">Premium Co-Branded Solutions &amp; Customized Travel Accessories.</p>
+    <section className="cart-main-section">
+      <div className="cart-main-container">
+        
+        {/* Header Row */}
+        <div className="cart-header-row">
+          <h1 className="cart-main-title">Your cart</h1>
+          <a href="/categories" className="cart-continue-link">
+            Continue shopping
+          </a>
         </div>
-      </section>
 
-      {/* Main Split Screen Contact Layout */}
-      <section className="contact-split-section">
-        <div className="contact-split-container">
-          
-          {/* Left Column: Image Area */}
-          <div className="contact-image-column">
-            <img 
-              src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=1000&q=80" 
-              alt="Vintage Leather Backpack on Metal Chair" 
-              className="contact-lifestyle-img"
-            />
+        {cartEmpty ? (
+          <div className="cart-empty-state">
+            <ShoppingBag size={56} className="empty-cart-icon" />
+            <p>Your cart is empty.</p>
+            <a href="/categories" className="cart-shop-now-btn">
+              Start Shopping
+            </a>
           </div>
-
-          {/* Right Column: Contact Content & Info Card Grid */}
-          <div className="contact-content-column">
-            
-            {/* Contact Form Container */}
-            <div className="contact-form-wrap">
-              <h2 className="contact-form-title">Send a Message</h2>
-              <p className="contact-form-subtitle">
-                If you have a question that isn&apos;t answered here then please get in touch with our customer service team.
-              </p>
-
-              <form onSubmit={handleSubmit} className="contact-actual-form">
-                
-                <div className="form-group-full">
-                  <input 
-                    type="text" 
-                    name="name" 
-                    placeholder="Name" 
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="contact-line-input" 
-                    required 
-                  />
-                </div>
-
-                <div className="form-group-split">
-                  <input 
-                    type="email" 
-                    name="email" 
-                    placeholder="Email *" 
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="contact-line-input" 
-                    required 
-                  />
-                  <input 
-                    type="tel" 
-                    name="phone" 
-                    placeholder="Phone number" 
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    className="contact-line-input" 
-                  />
-                </div>
-
-                <div className="form-group-full">
-                  <textarea 
-                    name="comment" 
-                    placeholder="Comment" 
-                    rows={4}
-                    value={formData.comment}
-                    onChange={handleInputChange}
-                    className="contact-line-input contact-textarea"
-                  ></textarea>
-                </div>
-
-                <button type="submit" className="contact-submit-btn">SEND MESSAGE</button>
-              </form>
+        ) : (
+          <>
+            {/* Table Column Titles */}
+            <div className="cart-table-header">
+              <span className="col-label-product">PRODUCT</span>
+              <span className="col-label-qty">QUANTITY</span>
+              <span className="col-label-total">TOTAL</span>
             </div>
 
-            {/* Contact Info Cards Area */}
-            <div className="contact-info-wrap">
-              <h2 className="contact-info-title">Contact Information</h2>
-              <p className="contact-info-subtitle">
-                We love to hear from you on our customer service, merchandise, website or any topics you want to share with us. Your comments and suggestions will be appreciated. Please complete the form below.
-              </p>
-
-              {/* Upper row: 3 Cards */}
-              <div className="info-cards-row">
-                
-                <div className="info-small-card">
-                  <div className="info-card-icon-part">
-                    <Mail size={22} />
+            {/* Cart Item Row */}
+            <div className="cart-item-row">
+              
+              {/* Product Detail Cell */}
+              <div className="cart-product-cell">
+                <div className="cart-product-img-wrap">
+                  <img
+                    src="https://images.unsplash.com/photo-1581605405669-fcdf81165afa?auto=format&fit=crop&w=300&q=80"
+                    alt="ONEGO Waterproof Backpack"
+                    className="cart-product-img"
+                  />
+                </div>
+                <div className="cart-product-details">
+                  <h3 className="cart-product-name">
+                    ONEGO Waterproof Casual Unisex Laptop Backpack for College Office Tuition...
+                  </h3>
+                  <div className="cart-product-prices">
+                    <span className="price-original">₹{originalPricePerUnit.toFixed(2)}</span>
+                    <span className="price-special">₹{pricePerUnit.toFixed(2)}</span>
                   </div>
-                  <div className="info-card-divider"></div>
-                  <div className="info-card-text-part">
-                    <span className="info-label">Email</span>
-                    <a href="mailto:onegobags@gmail.com" className="info-value">onegobags@gmail.com</a>
+                  <div className="cart-offer-tag">
+                    <Tag size={14} className="tag-icon" />
+                    <span>Buy 2 products &amp; get 10% Off</span>
                   </div>
                 </div>
-
-                <div className="info-small-card">
-                  <div className="info-card-icon-part">
-                    <Phone size={22} />
-                  </div>
-                  <div className="info-card-divider"></div>
-                  <div className="info-card-text-part">
-                    <span className="info-label">Call us</span>
-                    <a href="tel:+919700869525" className="info-value">+919700869525</a>
-                  </div>
-                </div>
-
-                <div className="info-small-card">
-                  <div className="info-card-icon-part">
-                    <Clock size={22} />
-                  </div>
-                  <div className="info-card-divider"></div>
-                  <div className="info-card-text-part">
-                    <span className="info-label">Time</span>
-                    <span className="info-value">Everyday 9:00-17:00</span>
-                  </div>
-                </div>
-
               </div>
 
-              {/* Lower row: Wide Location Card */}
-              <div className="info-wide-card">
-                <div className="info-card-icon-part">
-                  <MapPin size={22} />
+              {/* Quantity Controls Cell */}
+              <div className="cart-qty-cell">
+                <div className="qty-picker-wrap">
+                  <button
+                    className="qty-btn"
+                    onClick={decrementQuantity}
+                    aria-label="Decrease quantity"
+                  >
+                    <Minus size={16} />
+                  </button>
+                  <span className="qty-value">{quantity}</span>
+                  <button
+                    className="qty-btn"
+                    onClick={incrementQuantity}
+                    aria-label="Increase quantity"
+                  >
+                    <Plus size={16} />
+                  </button>
                 </div>
-                <div className="info-card-divider"></div>
-                <div className="info-card-text-part">
-                  <span className="info-label">Location</span>
-                  <span className="info-value-wide">
-                    12-2-36/29/11, Zeba Bagh Rd, Asif Nagar, Hyderabad, 500028, Telangana, India
-                  </span>
-                </div>
+                <button
+                  className="cart-delete-btn"
+                  onClick={handleRemoveItem}
+                  aria-label="Remove item"
+                >
+                  <Trash2 size={20} />
+                </button>
+              </div>
+
+              {/* Subtotal Cell */}
+              <div className="cart-total-cell">
+                <span className="total-original">₹{totalOriginal.toFixed(2)}</span>
+                <span className="total-special">₹{totalDiscounted.toFixed(2)}</span>
               </div>
 
             </div>
 
-          </div>
+            {/* Bottom Section Layout */}
+            <div className="cart-footer-block">
+              
+              {/* Special Instructions (Left) */}
+              <div className="cart-instructions-side">
+                <label htmlFor="specialInstructions" className="instructions-label">
+                  Order special instructions
+                </label>
+                <textarea
+                  id="specialInstructions"
+                  placeholder="Add a note to your order..."
+                  rows={4}
+                  value={instructions}
+                  onChange={(e) => setInstructions(e.target.value)}
+                  className="instructions-textarea"
+                ></textarea>
+              </div>
 
-        </div>
-      </section>
-    </div>
+              {/* Checkout pricing details (Right) */}
+              <div className="cart-checkout-side">
+                <div className="estimated-total-row">
+                  <span className="estimated-label">Estimated total</span>
+                  <span className="estimated-value">₹{totalDiscounted.toFixed(2)}</span>
+                </div>
+                <p className="checkout-notice-text">
+                  Taxes included. Discounts and{" "}
+                  <a href="#" className="shipping-underlined">
+                    shipping
+                  </a>{" "}
+                  calculated at checkout.
+                </p>
+                <button className="place-order-submit-btn">PLACE ORDER</button>
+              </div>
+
+            </div>
+          </>
+        )}
+      </div>
+    </section>
   );
 }
