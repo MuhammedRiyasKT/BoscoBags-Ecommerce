@@ -152,7 +152,7 @@ export default function CategoriesPage() {
     },
     {
       id: 2,
-      text: "OneGo Fashion offers the perfect blend of style and durability. The luggage I bought is spacious, lightweight, and easy to maneuver. It's been a great travel companion on my trips. Absolutely worth the price!",
+      text: "Bosco Fashion offers the perfect blend of style and durability. The luggage I bought is spacious, lightweight, and easy to maneuver. It's been a great travel companion on my trips. Absolutely worth the price!",
       authorName: "Amit Sharma",
       authorRole: "IT Professional",
       avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80"
@@ -196,7 +196,7 @@ export default function CategoriesPage() {
   return (
     <>
 
-      {/* Hero Banner: Onego Collection */}
+      {/* Hero Banner: Bosco Collection */}
       <section className="category-hero">
         <div className="category-hero-content">
           <h1 className="category-hero-title">
@@ -209,7 +209,7 @@ export default function CategoriesPage() {
         <div className="category-hero-image-wrap">
           <img
             src="https://images.unsplash.com/photo-1542226601-bc82e276ae0a?auto=format&fit=crop&w=1200&q=80"
-            alt="Onego Collection Models"
+            alt="Bosco Collection Models"
             className="category-hero-img"
           />
         </div>
@@ -237,14 +237,14 @@ export default function CategoriesPage() {
       </section>
 
       {/* End Of Sale Banner Section */}
-      <section className="eos-banner-section" style={{ backgroundImage: "url('/assets/endsale.png')" }}>
-        <div className="eos-banner-container">
-          {/* Absolute positioning wrapper to lock the button beneath "ACKS" */}
-          <div className="eos-offer">
-            <a href="/" className="eos-offer-btn">SHOP NOW</a>
-          </div>
+       <section className="eos-banner-section">
+      <div className="eos-banner-container">
+        {/* Absolute positioning wrapper to lock the button beneath "ACKS" */}
+        <div className="eos-offer">
+          <a href="/" className="eos-offer-btn">SHOP NOW</a>
         </div>
-      </section>
+      </div>
+    </section>
 
       {/* Features Bar Section */}
        <section className="features-bar">

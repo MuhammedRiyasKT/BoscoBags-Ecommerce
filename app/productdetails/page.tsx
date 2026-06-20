@@ -14,10 +14,10 @@ const GALLERY_ITEMS = [
 
 // Related Products
 const RELATED_PRODUCTS = [
-  { id: 101, name: "ONEGO Premium Pack", price: 599, original: 1699, discount: 65, img: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=400&q=80", bg: "#fce8d5" },
-  { id: 102, name: "ONEGO Waterproof Pack", price: 499, original: 1699, discount: 71, img: "https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?auto=format&fit=crop&w=400&q=80", bg: "#dcf5f5" },
+  { id: 101, name: "BOSCO Premium Pack", price: 599, original: 1699, discount: 65, img: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=400&q=80", bg: "#fce8d5" },
+  { id: 102, name: "BOSCO Waterproof Pack", price: 499, original: 1699, discount: 71, img: "https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?auto=format&fit=crop&w=400&q=80", bg: "#dcf5f5" },
   { id: 103, name: "Laptop Backpack Premium", price: 599, original: 1699, discount: 65, img: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=400&q=80", bg: "#f5eedc" },
-  { id: 104, name: "ONEGO Laptop Daily Pack", price: 599, original: 1699, discount: 65, img: "https://images.unsplash.com/photo-1491637639811-60e2756cc1c7?auto=format&fit=crop&w=400&q=80", bg: "#dce8f5" }
+  { id: 104, name: "BOSCO Laptop Daily Pack", price: 599, original: 1699, discount: 65, img: "https://images.unsplash.com/photo-1491637639811-60e2756cc1c7?auto=format&fit=crop&w=400&q=80", bg: "#dce8f5" }
 ];
 
 export default function ProductDetailsPage() {
@@ -136,7 +136,7 @@ export default function ProductDetailsPage() {
               {activeItem.type === "video" ? (
                 <video src={activeItem.url} controls className="pdp-main-video" autoPlay />
               ) : (
-                <img src={activeItem.url} alt="ONEGO Laptop Backpack Featured View" className="pdp-main-image" />
+                <img src={activeItem.url} alt="BOSCO Laptop Backpack Featured View" className="pdp-main-image" />
               )}
 
               <button className="pdp-main-nav-arrow pdp-main-nav-arrow--right" onClick={() => handleMainImageNav("next")}>
@@ -153,7 +153,7 @@ export default function ProductDetailsPage() {
           {/* Right Column: Purchasing Details & Nested Widgets (FBT, Accordions) */}
           <div className="pdp-purchase-col">
             <h1 className="pdp-product-title">
-              ONEGO Laptop Backpack, Water-Resistant Business &amp; College Backpack for Men &amp; Women (Blue)
+              BOSCO Laptop Backpack, Water-Resistant Business &amp; College Backpack for Men &amp; Women (Blue)
             </h1>
 
             {/* Ratings Summary Row */}
@@ -232,7 +232,7 @@ export default function ProductDetailsPage() {
                   <div className="fbt-p-preview">
                     <img src={GALLERY_ITEMS[0].url} alt="FBT Item 1 preview" className="fbt-preview-img" />
                     <div className="fbt-preview-info">
-                      <p className="fbt-preview-name">ONEGO Laptop Backpack (Grey)</p>
+                      <p className="fbt-preview-name">BOSCO Laptop Backpack (Grey)</p>
                       <span className="fbt-preview-price">₹599.00 <del>₹1,699.00</del></span>
                     </div>
                   </div>
@@ -249,7 +249,7 @@ export default function ProductDetailsPage() {
                   <div className="fbt-p-preview">
                     <img src={GALLERY_ITEMS[2].url} alt="FBT Item 2 preview" className="fbt-preview-img" />
                     <div className="fbt-preview-info">
-                      <p className="fbt-preview-name">ONEGO Business Backpack (Black)</p>
+                      <p className="fbt-preview-name">BOSCO Business Backpack (Black)</p>
                       <span className="fbt-preview-price">₹599.00 <del>₹1,699.00</del></span>
                     </div>
                   </div>
@@ -279,7 +279,7 @@ export default function ProductDetailsPage() {
                 <h4 className="pdp-accordion-title">DESCRIPTION</h4>
                 <div className="pdp-accordion-panel pdp-accordion-panel--open">
                   <p className="desc-body-p">
-                    The ONEGO Laptop Backpack is perfect for both business professionals and college students. Its water-resistant design ensures that your belongings stay safe and dry during your daily commute or travels. With its sleek blue color, this backpack is both stylish and functional. Stay organized and prepared with the ONEGO Laptop Backpack.
+                    The BOSCO Laptop Backpack is perfect for both business professionals and college students. Its water-resistant design ensures that your belongings stay safe and dry during your daily commute or travels. With its sleek blue color, this backpack is both stylish and functional. Stay organized and prepared with the BOSCO Laptop Backpack.
                   </p>
                 </div>
               </div>

@@ -21,7 +21,7 @@ const BLOG_DATA: BlogPost[] = [
   {
     id: 1,
     title: "Travel Smart: The Ultimate Guide to Choosing th...",
-    excerpt: "Make your travels smooth and stress-free with the perfect luggage and accessories! At OneGo Fashion, we offer a premium range of stylish and durable luggage bags, backpacks, and...",
+    excerpt: "Make your travels smooth and stress-free with the perfect luggage and accessories! At Bosco Fashion, we offer a premium range of stylish and durable luggage bags, backpacks, and...",
     date: "Mar 04, 2025",
     authorName: "My Store Admin",
     authorAvatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80",
@@ -90,7 +90,7 @@ const BLOG_DATA: BlogPost[] = [
             The Ultimate Guide to Choosing the Perfect Luggage and Accessories
           </p>
           <p>
-            Traveling is an exciting experience, but having the right luggage and accessories can make your journey even more enjoyable and hassle-free. At OneGo Fashion, we offer a premium selection of luggage bags and travel accessories designed to suit all kinds of travelers. Whether you're a frequent flyer or an occasional explorer, selecting the perfect luggage is crucial. Here's everything you need to know before making your next purchase.
+            Traveling is an exciting experience, but having the right luggage and accessories can make your journey even more enjoyable and hassle-free. At Bosco Fashion, we offer a premium selection of luggage bags and travel accessories designed to suit all kinds of travelers. Whether you're a frequent flyer or an occasional explorer, selecting the perfect luggage is crucial. Here's everything you need to know before making your next purchase.
           </p>
 
           <h2 className="bd-section-heading">1. Types of Luggage Bags</h2>
@@ -153,18 +153,18 @@ const BLOG_DATA: BlogPost[] = [
             </li>
           </ul>
 
-          <h2 className="bd-section-heading">4. Why Choose OneGo Fashion for Your Travel Needs?</h2>
+          <h2 className="bd-section-heading">4. Why Choose Bosco Fashion for Your Travel Needs?</h2>
           <p>
-            At OneGo Fashion, we prioritize quality, style, and functionality in our luggage and travel accessories. Our products are designed to meet the highest standards, ensuring durability and convenience for every traveler. With a wide range of trendy and functional designs, we make traveling effortless and stylish.
+            At Bosco Fashion, we prioritize quality, style, and functionality in our luggage and travel accessories. Our products are designed to meet the highest standards, ensuring durability and convenience for every traveler. With a wide range of trendy and functional designs, we make traveling effortless and stylish.
           </p>
 
           <h2 className="bd-section-heading">Conclusion</h2>
           <p>
-            Choosing the right luggage and accessories can greatly impact your travel experience. Whether you need a sturdy suitcase, a lightweight carry-on, or essential travel accessories, OneGo Fashion has got you covered. Explore our collection today and travel with confidence!
+            Choosing the right luggage and accessories can greatly impact your travel experience. Whether you need a sturdy suitcase, a lightweight carry-on, or essential travel accessories, Bosco Fashion has got you covered. Explore our collection today and travel with confidence!
           </p>
           
           <p className="bd-cta-text">
-            Shop now at <a href="https://OneGoFashion.com" target="_blank" rel="noopener noreferrer" className="bd-inline-link">OneGoFashion.com</a> and elevate your travel experience!
+            Shop now at <a href="https://Boscobags.in" target="_blank" rel="noopener noreferrer" className="bd-inline-link">Boscobags.in</a> and elevate your travel experience!
           </p>
         </div>
 

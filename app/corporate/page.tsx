@@ -37,7 +37,7 @@ export default function CorporatePage() {
           <div className="corporate-intro">
             <h2 className="corporate-main-heading">Corporate Gifting – Customized Luggage &amp; Travel Accessories</h2>
             <p className="corporate-lead-text">
-              Enhance your brand visibility with high-quality, co-branded luggage and travel accessories from <strong>ONEGO</strong>.
+              Enhance your brand visibility with high-quality, co-branded luggage and travel accessories from <strong>BOSCO</strong>.
             </p>
             <p className="corporate-lead-text">
               We specialize in <strong>customized corporate gifting solutions</strong>, offering premium <strong>backpacks, travel bags, and accessories</strong> tailored to your company's needs.
@@ -46,7 +46,7 @@ export default function CorporatePage() {
 
           {/* Benefits Block (Converted into a modern card grid) */}
           <div className="corporate-block">
-            <h3 className="corporate-sub-heading">Why Choose ONEGO for Corporate Gifting?</h3>
+            <h3 className="corporate-sub-heading">Why Choose BOSCO for Corporate Gifting?</h3>
             <div className="corporate-benefits-grid">
               
               <div className="benefit-card">
@@ -55,7 +55,7 @@ export default function CorporatePage() {
                   <h4>Co-Branded Bags</h4>
                 </div>
                 <p className="benefit-text">
-                  Personalize <strong>ONEGO</strong> bags with your company <strong>Logo</strong> alongside our trusted brand name.
+                  Personalize <strong>BOSCO</strong> bags with your company <strong>Logo</strong> alongside our trusted brand name.
                 </p>
               </div>
 
@@ -92,7 +92,7 @@ export default function CorporatePage() {
             </div>
           </div>
 
-          {/* Offerings and Why ONEGO Grid */}
+          {/* Offerings and Why BOSCO Grid */}
           <div className="corporate-grid">
             
             <div className="corporate-grid-col">
@@ -111,9 +111,9 @@ export default function CorporatePage() {
             </div>
 
             <div className="corporate-grid-col">
-              <h3 className="corporate-sub-heading">Why ONEGO?</h3>
+              <h3 className="corporate-sub-heading">Why BOSCO?</h3>
               <p className="corporate-body-text">
-                Many suppliers in the market compromise on material quality and fail to meet delivery commitments. At <strong>ONEGO</strong>, we take full responsibility for quality and timely delivery.
+                Many suppliers in the market compromise on material quality and fail to meet delivery commitments. At <strong>BOSCO</strong>, we take full responsibility for quality and timely delivery.
               </p>
               <p className="corporate-body-text">
                 Your brand's reputation is as important to us as our own, which is why we guarantee <strong>exceptional craftsmanship and on-time execution</strong>.
@@ -150,9 +150,9 @@ export default function CorporatePage() {
               <div className="contact-direct-col">
                 <p className="contact-instruction">📬 For corporate inquiries &amp; bulk orders, contact us at:</p>
                 <div className="contact-links-wrap">
-                  <a href="mailto:onegofashion@gmail.com" className="contact-item-link">
+                  <a href="mailto:boscofashion@gmail.com" className="contact-item-link">
                     <Mail size={18} className="contact-item-icon" />
-                    <span>Email: <strong>onegofashion@gmail.com</strong></span>
+                    <span>Email: <strong>boscofashion@gmail.com</strong></span>
                   </a>
                   <a href="tel:+919700869525" className="contact-item-link">
                     <Phone size={18} className="contact-item-icon" />

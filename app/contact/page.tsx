@@ -75,13 +75,13 @@ export default function CartPage() {
                 <div className="cart-product-img-wrap">
                   <img
                     src="https://images.unsplash.com/photo-1581605405669-fcdf81165afa?auto=format&fit=crop&w=300&q=80"
-                    alt="ONEGO Waterproof Backpack"
+                    alt="Bosco Waterproof Backpack"
                     className="cart-product-img"
                   />
                 </div>
                 <div className="cart-product-details">
                   <h3 className="cart-product-name">
-                    ONEGO Waterproof Casual Unisex Laptop Backpack for College Office Tuition...
+                    Bosco Waterproof Casual Unisex Laptop Backpack for College Office Tuition...
                   </h3>
                   <div className="cart-product-prices">
                     <span className="price-original">₹{originalPricePerUnit.toFixed(2)}</span>

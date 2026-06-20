@@ -366,7 +366,7 @@ const TT_PRODUCTS: Record<string, Product[]> = {
 const NA_PRODUCTS = [
   {
     id: 31,
-    name: "ONEGO Laptop Backpack",
+    name: "BOSCO Laptop Backpack",
     price: 599,
     original: 1699,
     discount: 65,
@@ -376,7 +376,7 @@ const NA_PRODUCTS = [
   },
   {
     id: 32,
-    name: "ONEGO Versatile & Sleek",
+    name: "BOSCO Versatile & Sleek",
     price: 399,
     original: 1699,
     discount: 77,
@@ -386,7 +386,7 @@ const NA_PRODUCTS = [
   },
   {
     id: 33,
-    name: "ONEGO Formal Briefcase",
+    name: "BOSCO Formal Briefcase",
     price: 599,
     original: 1699,
     discount: 65,
@@ -396,7 +396,7 @@ const NA_PRODUCTS = [
   },
   {
     id: 34,
-    name: "ONEGO Waterproof Pack",
+    name: "BOSCO Waterproof Pack",
     price: 499,
     original: 1699,
     discount: 71,
@@ -421,7 +421,7 @@ const BLOG_DATA: BlogPost[] = [
   {
     id: 1,
     title: "Travel Smart: The Ultimate Guide to Choosing th...",
-    excerpt: "Make your travels smooth and stress-free with the perfect luggage and accessories! At OneGo Fashion, we offer a premium range of stylish and durable luggage bags, backpacks, and...",
+    excerpt: "Make your travels smooth and stress-free with the perfect luggage and accessories! At Bosco Fashion, we offer a premium range of stylish and durable luggage bags, backpacks, and...",
     date: "Mar 04, 2025",
     authorName: "My Store Admin",
     authorAvatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80",
@@ -468,7 +468,7 @@ const REVIEWS_DATA: Review[] = [
   },
   {
     id: 2,
-    text: "OneGo Fashion offers the perfect blend of style and durability. The luggage I bought is spacious, lightweight, and easy to maneuver. It's been a great travel companion on my trips. Absolutely worth the price!",
+    text: "Bosco Fashion offers the perfect blend of style and durability. The luggage I bought is spacious, lightweight, and easy to maneuver. It's been a great travel companion on my trips. Absolutely worth the price!",
     authorName: "Amit Sharma",
     authorRole: "IT Professional",
     avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80"
@@ -1089,79 +1089,81 @@ useEffect(() => {
 
       {/* Our Blog Section */}
       <section className="blog-section">
-        <div className="blog-container">
+      <div className="blog-container">
 
-          <div className="blog-header">
-            <h2 className="blog-main-title">Our Latest Blog</h2>
-          </div>
+        <div className="blog-header">
+          <h2 className="blog-main-title">Our Latest Blog</h2>
+        </div>
 
-          <div className="blog-slider-wrap">
+        <div className="blog-slider-wrap">
 
-            {/* Left Arrow */}
-            <button
-              className="blog-nav-btn blog-nav-btn--left"
-              onClick={() => handleBlogScroll("left")}
-            >
-              <ChevronLeft size={22} />
-            </button>
+          {/* Left Arrow */}
+          <button
+            className="blog-nav-btn blog-nav-btn--left"
+            onClick={() => handleBlogScroll("left")}
+            aria-label="Previous slide"
+          >
+            <ChevronLeft size={22} />
+          </button>
 
-            {/* Blog Cards */}
-            <div className="blog-grid" ref={blogScrollRef}>
-              {BLOG_DATA.map((blog) => (
-                <a href={`/blog/${blog.id}`} key={blog.id} className="blog-card">
+          {/* Blog Cards Grid */}
+          <div className="blog-grid" ref={blogScrollRef}>
+            {BLOG_DATA.map((blog) => (
+              <a href={`/blog/${blog.id}`} key={blog.id} className="blog-card">
 
-                  <div className="blog-img-wrap">
-                    <img src={blog.image} alt={blog.title} className="blog-img" />
-                  </div>
+                <div className="blog-img-wrap">
+                  <img src={blog.image} alt={blog.title} className="blog-img" />
+                </div>
 
-                  <div className="blog-meta">
-                    <div className="blog-author-info">
-                      <img
-                        src={blog.authorAvatar}
-                        alt={blog.authorName}
-                        className="blog-avatar"
-                      />
-                      <div className="blog-author-details">
-                        <span className="blog-author-name">{blog.authorName}</span>
-                        <span className="blog-date">{blog.date}</span>
-                      </div>
-                    </div>
-
-                    <div className="blog-views">
-                      <Eye size={18} />
-                      <span>{blog.views}</span>
+                <div className="blog-meta">
+                  <div className="blog-author-info">
+                    <img
+                      src={blog.authorAvatar}
+                      alt={blog.authorName}
+                      className="blog-avatar"
+                    />
+                    <div className="blog-author-details">
+                      <span className="blog-author-name">{blog.authorName}</span>
+                      <span className="blog-date">{blog.date}</span>
                     </div>
                   </div>
 
-                  <h3 className="blog-title">{blog.title}</h3>
-                  <p className="blog-desc">{blog.excerpt}</p>
+                  <div className="blog-views">
+                    <Eye size={18} />
+                    <span>{blog.views}</span>
+                  </div>
+                </div>
 
-                  <span className="blog-readmore">
-                    Read more <span className="blog-readmore-arrow">▶</span>
-                  </span>
+                <h3 className="blog-title">{blog.title}</h3>
+                <p className="blog-desc">{blog.excerpt}</p>
 
-                </a>
-              ))}
-            </div>
+                <span className="blog-readmore">
+                  Read more <span className="blog-readmore-arrow">▶</span>
+                </span>
 
-            {/* Right Arrow */}
-            <button
-              className="blog-nav-btn blog-nav-btn--right"
-              onClick={() => handleBlogScroll("right")}
-            >
-              <ChevronRight size={22} />
-            </button>
-
+              </a>
+            ))}
           </div>
 
-          <div className="blog-footer">
-            <a href="/blog" className="blog-view-all-btn">
-              View All
-            </a>
-          </div>
+          {/* Right Arrow */}
+          <button
+            className="blog-nav-btn blog-nav-btn--right"
+            onClick={() => handleBlogScroll("right")}
+            aria-label="Next slide"
+          >
+            <ChevronRight size={22} />
+          </button>
 
         </div>
-      </section>
+
+        <div className="blog-footer">
+          <a href="/blog" className="blog-view-all-btn">
+            View All
+          </a>
+        </div>
+
+      </div>
+    </section>
 
       {/* Our Client Reviews Section */}
       <section className="reviews-section">

@@ -2041,7 +2041,10 @@ ul {
   }
 }
 
-/* ── Our Latest Blog Section ── */
+/* ==========================================================================
+   Our Latest Blog Section Styles
+   ========================================================================== */
+
 .blog-section {
   background-color: #ffffff;
   padding: 4.5rem 0 5rem;
@@ -2055,7 +2058,7 @@ ul {
   padding: 0 1.5rem;
 }
 
-/* ── Entrance Keyframes ── */
+/* Entrance Keyframes */
 @keyframes blogFadeInUp {
   from {
     opacity: 0;
@@ -2067,7 +2070,7 @@ ul {
   }
 }
 
-/* Header with Load Animation */
+/* Header */
 .blog-header {
   text-align: center;
   margin-bottom: 3rem;
@@ -2082,7 +2085,7 @@ ul {
   letter-spacing: -0.5px;
 }
 
-/* Grid Layout with Staggered Load Animation */
+/* Grid Layout */
 .blog-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -2101,7 +2104,7 @@ ul {
 .blog-img-wrap {
   width: 100%;
   aspect-ratio: 16 / 10;
-  border-radius: 24px; /* ചിത്രത്തിലേതുപോലെയുള്ള മനോഹരമായ വളഞ്ഞ കോണുകൾ */
+  border-radius: 24px;
   overflow: hidden;
   margin-bottom: 1.25rem;
 }
@@ -2170,7 +2173,7 @@ ul {
 .blog-title {
   font-size: 1.35rem;
   font-weight: 700;
-  color: #999999; /* മുകളിലെ ചിത്രത്തിലുള്ള പ്രകാരം അല്പം മങ്ങിയ കടും നിറം */
+  color: #999999;
   line-height: 1.4;
   margin: 0 0 0.75rem 0;
   transition: color 0.2s ease;
@@ -2191,28 +2194,27 @@ ul {
   overflow: hidden;
 }
 
-/* Read More Link (Color updated to Primary Deep Blue #040d80) */
+/* Read More Links */
 .blog-readmore {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #040d80; /* Primary Deep Blue */
+  color: #040d80;
   font-size: 0.9rem;
   font-weight: 700;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
-/* Hover Accent Transition (Color transitions to Electric Light Blue #00b7ff) */
 .blog-card:hover .blog-readmore {
-  color: #00b7ff; /* Vibrant Light Blue */
+  color: #00b7ff;
 }
 
 .blog-readmore-arrow {
   font-size: 0.85rem;
 }
 
-/* Footer "View All" Button Container with Load Animation */
+/* Footer "View All" Button */
 .blog-footer {
   display: flex;
   justify-content: center;
@@ -2224,7 +2226,7 @@ ul {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: #1f1e25; /* കടും കറുപ്പ് ബാക്ക്ഗ്രൗണ്ട് */
+  background-color: #1f1e25;
   color: #ffffff;
   font-size: 0.85rem;
   font-weight: 700;
@@ -2250,11 +2252,15 @@ ul {
   position: relative;
 }
 
+/* Navigation arrows hidden on Desktop */
 .blog-nav-btn {
   display: none;
 }
 
-/* Responsive Rules */
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+
 @media (max-width: 1024px) {
   .blog-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -2262,87 +2268,99 @@ ul {
   }
 }
 
-@media (max-width:768px) {
-
-  .blog-main-title{
-    font-size:2.1rem;
+/* Mobile Slider View (Scroll Snap Enabled) */
+@media (max-width: 768px) {
+  .blog-main-title {
+    font-size: 2.1rem;
   }
 
-  .blog-slider-wrap{
-    position:relative;
-    width:100%;
+  .blog-slider-wrap {
+    position: relative;
+    width: 100%;
   }
 
-  .blog-grid{
-    display:flex;
-    overflow-x:auto;
-    gap:20px;
-    scroll-behavior:smooth;
-    scrollbar-width:none;
-    -ms-overflow-style:none;
+  .blog-grid {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    
+    /* Adds mandatory horizontal scroll snapping on mobile swipe gestures */
+    scroll-snap-type: x mandatory; 
   }
 
-  .blog-grid::-webkit-scrollbar{
-    display:none;
+  .blog-grid::-webkit-scrollbar {
+    display: none;
   }
 
-  .blog-card{
-    flex:0 0 100%;
-    min-width:100%;
-    max-width:100%;
+  /* Slider Card Configuration */
+  .blog-card {
+    flex: 0 0 100%;
+    min-width: 100%;
+    max-width: 100%;
+    
+    /* Forces the card to snap directly to the center on swipe/scroll */
+    scroll-snap-align: center; 
   }
 
-  .blog-img-wrap{
-    width:100%;
-    aspect-ratio:16/10;
-    overflow:hidden;
-    border-radius:20px;
-    margin-bottom:18px;
+  .blog-img-wrap {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-radius: 20px;
+    margin-bottom: 18px;
   }
 
-  .blog-img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
+  .blog-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
-  .blog-title{
-    font-size:1.15rem;
-    line-height:1.5;
+  .blog-title {
+    font-size: 1.15rem;
+    line-height: 1.5;
   }
 
-  .blog-desc{
-    font-size:.85rem;
-    line-height:1.6;
+  .blog-desc {
+    font-size: .85rem;
+    line-height: 1.6;
   }
 
-  /* arrows */
-  .blog-nav-btn{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    position:absolute;
-    top:32%;
-    transform:translateY(-50%);
-    width:40px;
-    height:40px;
-    border:none;
-    border-radius:50%;
-    background:#fff;
-    box-shadow:0 5px 20px rgba(0,0,0,.15);
-    z-index:100;
-    cursor:pointer;
+  /* Display navigation arrows on mobile slider */
+  .blog-nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 32%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    cursor: pointer;
+    color: #1a1a1a;
+    transition: background-color 0.2s, color 0.2s;
   }
 
-  .blog-nav-btn--left{
-    left:-8px;
+  .blog-nav-btn:hover {
+    background-color: #f5f5f7;
   }
 
-  .blog-nav-btn--right{
-    right:-8px;
+  .blog-nav-btn--left {
+    left: -8px;
   }
 
+  .blog-nav-btn--right {
+    right: -8px;
+  }
 }
 
 /* ── Blog Page Styling Wrapper ── */
@@ -4020,7 +4038,7 @@ ul {
 }
 
 /* ==========================================================================
-   14. End Of Sale Banner Styles
+   End Of Sale Banner Styles
    ========================================================================== */
 
 /* Background graphic fade-in entrance animation on load */
@@ -4035,7 +4053,8 @@ ul {
 
 .eos-banner-section {
   width: 100%;
-  aspect-ratio: 2 / 1; /* Maintains exact 2:1 image proportions with zero cropping */
+  aspect-ratio: 2 / 1; /* Maintains exact 2:1 image proportions on desktop */
+  background-image: url('/assets/endsale.png'); /* Default Desktop/Tablet Image */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -4046,7 +4065,7 @@ ul {
   animation: eosSectionFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-/* ── Entrance Animation Keyframe ── */
+/* Entrance Animation Keyframe */
 @keyframes eosFadeInUp {
   from {
     opacity: 0;
@@ -4115,7 +4134,7 @@ ul {
   transform: translateY(-1px);
 }
 
-/* ── Responsive Scaling Adjustments ── */
+/* Responsive Scaling Adjustments */
 @media (max-width: 992px) {
   /* Scales proportional padding slightly on tablets */
   .eos-offer-btn {
@@ -4123,20 +4142,27 @@ ul {
   }
 }
 
+/* Mobile View Port (Swaps background to vertical mobile graphic) */
 @media (max-width: 640px) {
+  .eos-banner-section {
+    /* Loads your mobile specific vertical banner image */
+    background-image: url('/assets/endsale-mobile.png'); 
+    aspect-ratio: 2 / 3; /* Adjusts aspect-ratio to portrait to fit the mobile layout without stretching */
+  }
+
   /* Keeps the coordinate scaling neat on smaller mobile screen aspects */
- .eos-offer {
-    right: 10.5%;     /* അക്ഷരങ്ങൾക്ക് താഴെ കറക്റ്റ് ആയി വരാൻ */
-    bottom: 4.5%;     /* അക്ഷരങ്ങളിലേക്ക് കയറി നിൽക്കാതെ താഴേക്ക് ഇറക്കി നിർത്തി */
-    width: 25%;       /* ഇമേജിന് അനുയോജ്യമായ വീതി */
-    min-width: 95px;  /* ബട്ടൺ മൊബൈൽ സ്ക്രീനിൽ കൂടുതൽ വലുതാകാതിരിക്കാൻ */
+  .eos-offer {
+    right: 8.5%;     /* Positioned precisely under mobile letters */
+    bottom: 15.5%;     /* Adjusted clearance space to prevent overlap on mobile */
+    width: 25%;       
+    min-width: 95px;  
   }
   
   .eos-offer-btn {
-    padding: 6px 0;   /* ബട്ടണിന്റെ ഉൾഭാഗത്തെ സ്പേസ് കുറച്ചു */
-    font-size: 0.65rem; /* അക്ഷരങ്ങളുടെ വലിപ്പം കുറച്ചു */
+    padding: 6px 0;   
+    font-size: 0.65rem; 
     letter-spacing: 1px;
-    border-radius: 20px; /* ബട്ടണിന്റെ വളവ് കുറഞ്ഞ സൈസിന് അനുയോജ്യമാക്കി */
+    border-radius: 20px; 
   }
 }
 
@@ -8064,7 +8090,7 @@ ul {
   font-weight: 600;
 }
 
-/* Offerings and Why ONEGO Grid */
+/* Offerings and Why BOSCO Grid */
 .corporate-grid {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;

@@ -16,7 +16,7 @@ const INITIAL_WISHLIST = [
   },
   {
     id: 2,
-    name: "ONEGO Formal Briefcase & Mess...",
+    name: "BOSCO Formal Briefcase & Mess...",
     price: 599,
     originalPrice: 1699,
     img: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=80",
@@ -25,7 +25,7 @@ const INITIAL_WISHLIST = [
   },
   {
     id: 3,
-    name: "ONEGO College Backpack, Wat...",
+    name: "BOSCO College Backpack, Wat...",
     price: 399,
     originalPrice: 1699,
     img: "https://images.unsplash.com/photo-1581605405669-fcdf81165afa?auto=format&fit=crop&w=600&q=80",

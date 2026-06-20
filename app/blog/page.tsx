@@ -7,7 +7,7 @@ const BLOG_POSTS = [
   {
     id: 1,
     title: "Travel Smart: The Ultimate Guide to Choosing th...",
-    excerpt: "Make your travels smooth and stress-free with the perfect luggage and accessories! At OneGo Fashion, we offer a premium range of stylish and durable luggage bags, backpacks, and...",
+    excerpt: "Make your travels smooth and stress-free with the perfect luggage and accessories! At Bosco Fashion, we offer a premium range of stylish and durable luggage bags, backpacks, and...",
     image: "https://images.unsplash.com/photo-1539635278303-d4002c07eae3?auto=format&fit=crop&w=800&q=80",
     authorName: "My Store Admin",
     authorAvatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80",
